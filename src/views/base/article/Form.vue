@@ -1,15 +1,11 @@
 <template>
   <div class="ofa-form">
-    <el-card content-position="left" class="form-header" shadow="never">
-      <el-page-header @back="goBack" content="站内文章 Article" size="mini"></el-page-header>
-    </el-card>
     <el-card content-position="left" shadow="never">
       <div slot="header">
         <span class="card-header-label">基本信息</span>
       </div>
       <div class="form-content">
-        <el-form status-icon ref="form" :rules="validationRules" :model="entity" :disabled="disabled" class="form"
-          label-width="120px" size="mini">
+        <el-form status-icon ref="form" :rules="validationRules" :model="entity" :disabled="disabled" class="form" label-width="120px" size="mini">
           <el-form-item label="封面" prop="IconUrl">
             <crop-uploader :aspectRatio="[16, 9]" v-model="entity.IconUrl" @upload="uploadCover"></crop-uploader>
           </el-form-item>
@@ -39,7 +35,7 @@
         <el-button v-else type="primary" @click="submit">
           <font-awesome-icon fas icon="save"></font-awesome-icon>&nbsp;保存
         </el-button>
-        <el-button type="warning" @click="cancel">取消</el-button>
+        <!-- <el-button type="warning" @click="cancel">取消</el-button> -->
       </div>
     </el-card>
   </div>
@@ -80,9 +76,6 @@ export default {
       return this.$root.getPermissions(ARTICLE.name)
     }
   },
-  beforeRouteEnter (to, from, next) {
-    next(vm => vm.init())
-  },
   methods: {
     init () {
       if (!this.loading) {
@@ -90,6 +83,7 @@ export default {
         this.tenants = []
         this.isAdd = this.$route.params.isAdd
         this.entity = { Id: this.$store.state.guid, IconUrl: null, IsPublish: false, ...this.$route.params }
+        console.log('this.entity', this.entity)
         if (!this.isAdd) {
           this.disabled = true
         } else {
@@ -116,6 +110,7 @@ export default {
           if (response.Status) {
             this.isAdd = false
             this.disabled = true
+            this.$root.browser.closeCurrentTab({ ...ARTICLE_FORM, params: {} })
           }
         })
     },
@@ -125,6 +120,7 @@ export default {
         .then(response => {
           if (response.Status) {
             this.disabled = true
+            this.$root.browser.closeCurrentTab({ ...ARTICLE_FORM, params: {} })
           }
         })
     },
@@ -168,14 +164,10 @@ export default {
         .then(response => {
           callback(response)
         })
-    },
-    goBack () {
-      this.$refs.form.resetFields()
-      this.$root.navigate({ ...ARTICLE, params: {} })
     }
   },
-  created () {
-    this.init(this.$route.params)
+  activated () {
+    this.init()
   },
   components: { BaseArticleTypeCascader }
 }
@@ -216,7 +208,7 @@ img {
     }
 
     .tips {
-      padding: .875rem;
+      padding: 0.875rem;
       color: #99a9bf;
     }
   }

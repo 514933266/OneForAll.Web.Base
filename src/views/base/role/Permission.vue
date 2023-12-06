@@ -33,10 +33,10 @@ export default {
   methods: {
     init () {
       if (this.loading) return
+      this.loading = true
       this.get()
     },
     get () {
-      this.loading = true
       let url = this.$root.getApi(API.KEY, API.ROLE.PERMISSION)
       url = url.replace(/{id}/, this.roleId)
       this.axios.get(url).then(response => {

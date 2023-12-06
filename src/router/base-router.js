@@ -4,11 +4,10 @@ export const TENANT_FORM = { name: 'BaseTenantForm', label: '机构表单' }
 
 // 用户
 export const USER = { name: 'BaseUserApp' }
-export const USER_FORM = { name: 'BaseUserForm', label: '用户表单' }
 
 // 角色
 export const ROLE = { name: 'BaseRoleApp' }
-export const ROLE_DETAIL = { name: 'BaseRoleDetail' }
+export const ROLE_DETAIL = { name: 'BaseRoleDetail', isBlank: true, label: '角色管理' }
 export const ROLE_FORM = { name: 'BaseRoleForm', label: '角色表单' }
 export const ROLE_MEMBER = { name: 'BaseRoleMember' }
 export const ROLE_PERMISSION = { name: 'BaseRolePermission' }
@@ -32,4 +31,4 @@ export const DEPARTMENT_USER = { name: 'BaseDepartmentUser' }
 export const ARTICLE_TYPE = { name: 'BaseArticleTypeApp' }
 export const ARTICLE_TYPE_FORM = { name: 'BaseArticleTypeForm', label: '文章分类表单' }
 export const ARTICLE = { name: 'BaseArticleApp' }
-export const ARTICLE_FORM = { name: 'BaseArticleForm' }
+export const ARTICLE_FORM = { name: 'BaseArticleForm', isBlank: true, label: '图文表单' }

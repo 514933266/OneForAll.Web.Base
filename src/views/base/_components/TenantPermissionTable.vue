@@ -1,6 +1,5 @@
 <template>
-  <el-table border v-loading="loading" :data="list" :tree-props="{children: 'Children' }" @select="selectRow"
-    @select-all="selectAllRow" ref="table" row-key="Id" size="mini">
+  <el-table border v-loading="loading" :data="list" :tree-props="{children: 'Children' }" @select="selectRow" @select-all="selectAllRow" ref="table" row-key="Id" size="mini">
     <el-table-column type="selection" width="55" align="center" header-align="center"></el-table-column>
     <el-table-column label="名称" prop="Name" width="300">
       <template slot-scope="scope">
@@ -11,8 +10,7 @@
     </el-table-column>
     <el-table-column label="功能权限" prop="Permissions">
       <template slot-scope="scope">
-        <el-checkbox v-for="item in scope.row.Permissions" :key="item.Id" v-model="item.checked" size="mini"
-          @change="checkSinglePermission(scope.row, item)" class="perm-checkbox">
+        <el-checkbox v-for="item in scope.row.Permissions" :key="item.Id" v-model="item.checked" size="mini" @change="checkSinglePermission(scope.row, item)" class="perm-checkbox">
           {{ codeMode ? item.Code : item.Name }}
         </el-checkbox>
       </template>
@@ -63,6 +61,7 @@ export default {
   },
   methods: {
     init () {
+      console.log('this.list', this.list)
       if (this.loading) return
       this.get()
     },

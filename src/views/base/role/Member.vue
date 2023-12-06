@@ -72,17 +72,14 @@ export default {
       return this.$root.getApiDomain(API.KEY)
     }
   },
-  beforeRouteEnter (to, from, next) {
-    next(vm => vm.init())
-  },
   methods: {
     init () {
       if (this.loading) return
+      this.loading = true
       this.entity = { ...this.$route.params }
       this.get()
     },
     get () {
-      this.loading = true
       const url = this.$root.getApi(API.KEY, API.ROLE.MEMBER.replace(/{id}/, this.roleId))
       this.axios.get(url).then(response => {
         this.members = response

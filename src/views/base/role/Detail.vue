@@ -1,11 +1,12 @@
 <template>
-  <div class="ofa-form" style="height:100%;">
-    <el-card content-position="left" class="form-header" shadow="never">
-      <el-page-header @back="goBack" :content="`${entity.Name}-角色管理 Manage`" size="mini"></el-page-header>
-    </el-card>
-    <el-card content-position="left" class="form-content" shadow="never">
+  <el-container v-loading="loading">
+    <!-- <el-header class="header">
+      <el-page-header @back="goBack" :content="`${entity.Name}-角色管理`" size="mini"></el-page-header>
+    </el-header> -->
+    <el-main class="ofa-container column">
       <div class="tab-container">
-        <el-tabs v-model="activeTab">
+        <div class="tab-name">{{`${entity.Name}`}}</div>
+        <el-tabs v-model="activeTab" @tab-click="tabClick">
           <el-tab-pane label="全部权限" name="permTab">
             <permission :roleId="entity.Id" ref="permission"></permission>
           </el-tab-pane>
@@ -14,8 +15,8 @@
           </el-tab-pane>
         </el-tabs>
       </div>
-    </el-card>
-  </div>
+    </el-main>
+  </el-container>
 </template>
 
 <script>
@@ -33,20 +34,19 @@ export default {
       entity: {}
     }
   },
-  beforeRouteEnter (to, from, next) {
-    next(vm => vm.init())
-  },
   computed: {
     permissions () {
       return this.$root.getPermissions(ROLE.name)
     }
+  },
+  beforeRouteEnter (to, from, next) {
+    next(vm => vm.init())
   },
   methods: {
     init () {
       if (this.loading) return
       this.loading = true
       this.entity = { ...this.$route.params }
-      this.tabClick(this.activeTab)
       this.loading = false
     },
     tabClick (tab) {
@@ -67,7 +67,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.header {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
 .tab-container {
+  .tab-name {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
   /deep/ .el-tabs__item {
     font-size: 1rem !important;
     padding: 10px 20px !important;

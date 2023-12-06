@@ -1,6 +1,5 @@
 <template>
-  <el-cascader ref="tree" :props="{ checkStrictly: checkStrictly }" v-model="treePath" :options="tree" :placeholder="placeholder"
-    @change="changeSelectedNode" size="mini"></el-cascader>
+  <el-cascader ref="tree" :props="{ checkStrictly: checkStrictly }" v-model="treePath" :options="tree" :placeholder="placeholder" @change="changeSelectedNode" :size="size"></el-cascader>
 </template>
 
 <script>
@@ -9,6 +8,10 @@ import API from '../../../apis/base-api'
 export default {
   name: 'BaseArticleTypeCascader',
   props: {
+    size: {
+      type: String,
+      default: 'small'
+    },
     value: {
       type: String
     },
